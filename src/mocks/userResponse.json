@@ -1,0 +1,13 @@
+{
+  "id": "f292aef2-a171-4a80-9537-795debe114ed",
+  "accounts": [
+    {
+      "currency": "PLN",
+      "balance": 10
+    },
+    {
+      "currency": "EUR",
+      "balance": 1000
+    }
+  ]
+}

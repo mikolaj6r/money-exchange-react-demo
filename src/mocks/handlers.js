@@ -1,6 +1,8 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import exampleResponse from "./ratesResponse.json";
+import ratesResponse from "./ratesResponse.json";
+import currenciesResponse from "./currenciesResponse.json";
+import userResponse from "./userResponse.json";
 
 function moneyConverter(amount, baseRateInUSD, destRateInUSD) {
   const convertedPrice = amount * (1 / baseRateInUSD) * destRateInUSD;
@@ -16,7 +18,7 @@ async function fetchRatesOnline(ctx) {
 }
 
 function fetchRatesMock() {
-  return exampleResponse;
+  return ratesResponse;
 }
 
 function fetchRates(ctx) {
@@ -45,7 +47,7 @@ export const handlers = [
     }, {});
 
     return res(
-      ctx.json({ base, isMockData, rates: newRates, timestamp: Date.now()  })
+      ctx.json({ base, isMockData, rates: newRates, timestamp: Date.now() })
     );
   }),
 
@@ -79,5 +81,11 @@ export const handlers = [
         response: convertedAmount,
       })
     );
+  }),
+  rest.get("/api/me", async (req, res, ctx) => {
+    return res(ctx.json(userResponse));
+  }),
+  rest.get("/api/currencies", async (req, res, ctx) => {
+    return res(ctx.json(currenciesResponse));
   }),
 ];

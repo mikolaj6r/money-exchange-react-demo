@@ -1,0 +1,14 @@
+[
+  {
+    "fullName": "Polish Zloty",
+    "shortcut": "PLN"
+  },
+  {
+    "fullName": "Euro",
+    "shortcut": "EUR"
+  },
+  {
+    "fullName": "Pound sterling",
+    "shortcut": "GBP"
+  }
+]
