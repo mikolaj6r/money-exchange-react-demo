@@ -41,7 +41,10 @@
     ]
   },
   "devDependencies": {
-    "msw": "^0.36.5"
+    "autoprefixer": "^10.4.2",
+    "msw": "^0.36.5",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.13"
   },
   "msw": {
     "workerDirectory": "public"
