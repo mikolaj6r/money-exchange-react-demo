@@ -28,7 +28,6 @@ function fetchRates(ctx) {
 
 export const handlers = [
   rest.get("/api/latest", async (req, res, ctx) => {
-    // Perform an original request to the intercepted request URL
     const originalResponseData = await fetchRates(ctx);
 
     const base = req.url.searchParams.get("base") || "USD";
@@ -83,7 +82,66 @@ export const handlers = [
     );
   }),
   rest.get("/api/me", async (req, res, ctx) => {
-    return res(ctx.json(userResponse));
+    if (!sessionStorage.getItem("userData")) {
+      sessionStorage.setItem("userData", JSON.stringify(userResponse));
+    }
+
+    return res(ctx.json(JSON.parse(sessionStorage.getItem("userData"))));
+  }),
+
+  rest.post("/api/me/accounts/:currency", async (req, res, ctx) => {
+    const { currency } = req.params;
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
+
+    const doesAccountExist = userData.accounts.some(
+      (account) => account.currency === currency
+    );
+
+    if (!doesAccountExist) userData.accounts.push({ currency, balance: 0 });
+
+    sessionStorage.setItem("userData", JSON.stringify(userData));
+
+    return res(ctx.status(200), ctx.body("OK"));
+  }),
+  /*
+  interface ConvertProps {
+    from: string;
+    to: string;
+    amount: string;
+    rate: number;
+  }
+  */
+  rest.post("/api/me/convert", async (req, res, ctx) => {
+    const data = req.body;
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
+
+    const fromAccount = userData.accounts.find(
+      (account) => account.currency === data.from
+    );
+    const toAccount = userData.accounts.find(
+      (account) => account.currency === data.to
+    );
+
+    if (!fromAccount || !toAccount)
+      return res(
+        ctx.text(
+          "Converting error - Cannot find accounts with provided currencies"
+        )
+      );
+    if (fromAccount.balance < Number.parseFloat(data.amount))
+      return res(
+        ctx.text("Converting error - Balance on source account is too low")
+      );
+
+    const convertedAmount = data.amount * data.rate;
+
+    // do actual mutations
+    fromAccount.balance -= Number.parseFloat(data.amount);
+    toAccount.balance += convertedAmount;
+
+    sessionStorage.setItem("userData", JSON.stringify(userData));
+
+    return res(ctx.text("OK"));
   }),
   rest.get("/api/currencies", async (req, res, ctx) => {
     return res(ctx.json(currenciesResponse));

@@ -1,8 +1,15 @@
-import React from 'react';
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+import Exchange from "./views/Exchange/Exchange";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div>Hello</div>
+    <QueryClientProvider client={queryClient}>
+      <Exchange />
+    </QueryClientProvider>
   );
 }
 

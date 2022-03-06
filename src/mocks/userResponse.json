@@ -3,11 +3,11 @@
   "accounts": [
     {
       "currency": "PLN",
-      "balance": 10
+      "balance": 1000
     },
     {
       "currency": "EUR",
-      "balance": 1000
+      "balance": 100
     }
   ]
 }

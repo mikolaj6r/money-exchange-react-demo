@@ -1,14 +1,22 @@
 [
   {
     "fullName": "Polish Zloty",
-    "shortcut": "PLN"
+    "shortcut": "PLN",
+    "symbol": "zł"
   },
   {
     "fullName": "Euro",
-    "shortcut": "EUR"
+    "shortcut": "EUR",
+    "symbol": "€"
   },
   {
     "fullName": "Pound sterling",
-    "shortcut": "GBP"
+    "shortcut": "GBP",
+    "symbol": "£"
+  },
+  {
+    "fullName": "United States dollar",
+    "shortcut": "USD",
+    "symbol": "$"
   }
 ]
